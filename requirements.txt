@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+Pillow
+torch
+torchvision
+numpy
+perlin-numpy
+starlette # Needed for StreamingResponse
