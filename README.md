@@ -7,8 +7,8 @@ The primary goal is to validate the full machine learning lifecycle, from codeba
 
  Tech Stack
 The application leverages a modern microservice architecture designed for scalability and maintainability:
-Model:  PyTorch
-API Layer:  FastAPI
-Containerization:  Docker
+Model:  PyTorch,
+API Layer:  FastAPI,
+Containerization:  Docker,
 Deployment:  GCP Cloud Run
 
