@@ -1,9 +1,5 @@
 fastapi
 uvicorn
 python-multipart
-Pillow
-torch==2.2.2+cpu
-torchvision==0.17.2+cpu
-numpy
 perlin-numpy
 starlette

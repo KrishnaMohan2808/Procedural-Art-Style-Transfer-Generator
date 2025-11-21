@@ -1,24 +1,28 @@
-# Use a specific, stable Python base image (slim keeps the image small)
+# Use the stable, lightweight base Python image
 FROM python:3.10-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy requirements file first to leverage Docker caching
+# Copy the requirements file
 COPY requirements.txt .
 
-# Install dependencies
-RUN pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt \
-     -f https://download.pytorch.org/whl/torch_stable.html
+# --- FIX: Robust Dependency Installation ---
+# 1. Install Numpy and Pillow first (Core dependencies)
+RUN pip install --no-cache-dir numpy==1.26.4 Pillow
 
+# 2. Install PyTorch CPU versions explicitly
+# We use --index-url to force looking at the PyTorch CPU wheel repository
+RUN pip install --no-cache-dir torch==2.2.2 torchvision==0.17.2 --index-url https://download.pytorch.org/whl/cpu
 
-# Copy the rest of the project files (main.py, model files, styles folder, etc.)
+# 3. Install remaining dependencies from requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy all project files (main.py, model files, styles folder, etc.)
 COPY . .
 
-# Expose the port where FastAPI will run
+# Expose the port where FastAPI will run (Cloud Run expects 8080)
 EXPOSE 8080
 
 # Command to run the FastAPI app with Uvicorn
-# --host 0.0.0.0 allows external access from your host machine
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

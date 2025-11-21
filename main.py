@@ -1,14 +1,15 @@
 import io
-import torch
+import os
 import re
+import warnings
+
 import numpy as np
+import torch
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from PIL import Image
 from torchvision import transforms
-import warnings
-import os
 
 # Suppress annoying PyTorch UserWarnings
 warnings.filterwarnings("ignore", category=UserWarning)
